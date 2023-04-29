@@ -3,12 +3,13 @@ package aeroport;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.List;
 
 public class Vol {
 
     private String numero;
 
-    private Trajet trajet;
+    private Trajet trajet; 
 
     private Compagnie compagnie;
     
@@ -76,20 +77,29 @@ public class Vol {
         this.numero = numero;
     }
 
+     //Récupère l'aeroport de départ du vol
     public Aeroport getAeroportDepart() {
-        return trajet.getSaut().getDepart().getAeroport();
+        return trajet.getSaut().getEtapeDepart().getAeroport();
     }
 
+    //Récupère l'étape de départ du vol puis Set l'aeroport de départ du vol
     public void setDepart(Aeroport depart) {
-        this.depart = depart;
+        trajet.getSaut().getEtapeDepart().setAeroport(depart);
     }
 
-    public Aeroport getArrivee() {
-        return arrivee;
+    //Récupère l'aeroport d'arrivée du vol
+    public Aeroport getAeroportArrivee() {
+        return trajet.getLastSaut().getEtapeArrivee().getAeroport();
     }
 
+    //Récupère l'étape d'arrivée du vol puis set le nouvel aéroport
     public void setArrivee(Aeroport arrivee) {
-        this.arrivee = arrivee;
+        trajet.getLastSaut().getEtapeArrivee().setAeroport(arrivee);;
+    }
+
+    //Récupère la liste des escales du vol
+    public List<Etape> getEscales(){
+        return trajet.getEscales();
     }
 
     @Override

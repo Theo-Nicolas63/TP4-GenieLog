@@ -29,5 +29,9 @@ public class Etape {
         return duree;
     }
 
+    public void setAeroport(Aeroport aeroport) {
+        this.aeroport = aeroport;
+    }
+
     
 }
