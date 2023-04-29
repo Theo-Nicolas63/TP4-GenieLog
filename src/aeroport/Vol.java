@@ -8,11 +8,13 @@ public class Vol {
 
     private String numero;
 
-    private Aeroport depart;
-
-    private Aeroport arrivee;
+    private Trajet trajet;
 
     private Compagnie compagnie;
+    
+    //private Aeroport depart;
+
+    //private Aeroport arrivee;
 
     private Date dateDepart;
 
@@ -74,8 +76,8 @@ public class Vol {
         this.numero = numero;
     }
 
-    public Aeroport getDepart() {
-        return depart;
+    public Aeroport getAeroportDepart() {
+        return trajet.getSaut().getDepart().getAeroport();
     }
 
     public void setDepart(Aeroport depart) {

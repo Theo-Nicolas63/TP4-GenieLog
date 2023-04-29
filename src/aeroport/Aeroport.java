@@ -6,7 +6,9 @@ public class Aeroport {
 
     private String ville;
 
-    public Aeroport() {
+    public Aeroport(String nom, String ville) {
+        this.nom = nom;
+        this.ville = ville;
     }
 
     public String getNom() {
