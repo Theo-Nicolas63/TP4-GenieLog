@@ -24,7 +24,4 @@ public class Trajet {
         return saut.getLastSaut();
     }
 
-    public List<Etape> getEscales(){
-        return saut.getEtapesEscales();
-    }
 }

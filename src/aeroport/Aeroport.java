@@ -6,6 +6,8 @@ public class Aeroport {
 
     private String ville;
 
+    private String code;
+
     public Aeroport(String nom, String ville) {
         this.nom = nom;
         this.ville = ville;
@@ -25,5 +27,9 @@ public class Aeroport {
 
     public void setVille(String ville) {
         this.ville = ville;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }

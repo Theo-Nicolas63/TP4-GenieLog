@@ -19,6 +19,11 @@ public class Saut {
         this.suivant = null;
     }
 
+    public Saut(Etape depart, Etape arrivee) {
+        this.depart = depart;
+        this.arrivee = arrivee;
+    }
+
     public Etape getEtapeDepart() {
         return depart;
     }
@@ -58,6 +63,15 @@ public class Saut {
         }
 
         return escales;
+    }
+
+    //Ajoute une escale au milieu du dernier saut du vol
+    public void ajouterEscale(Aeroport aeroportEscale, Date datearrivee, Date datedepart){
+        Saut s = getLastSaut();
+        Etape escale = new Etape(datearrivee, aeroportEscale);
+        Saut suiv = new Saut(escale, s.arrivee);
+        s.arrivee = escale;
+        s.suivant = suiv;
     }
 
 }

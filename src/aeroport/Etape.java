@@ -1,6 +1,5 @@
 package aeroport;
 
-import java.sql.Date;
 import java.time.Duration;
 import java.util.Date;
 

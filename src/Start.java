@@ -27,7 +27,13 @@ public class Start {
         //CREATION VOL SIMPLE
         Aeroport a1 = new Aeroport("Charles de Gaulle", "Paris");
         Aeroport a2 = new Aeroport("Blagnac", "Toulouse");
-        Vol volSimple = new Vol("AF1", a1, a2, format.parse(dd), format.parse(da));
+        Aeroport a3 = new Aeroport("Saint-Exupéry", "Lyon");
+        Date d1 = new Date(103384);
+        Date d2 = new Date(103384);
+        Vol volSimple = new Vol("AF1", a1, a2, d1, d2);
+        volSimple.ajouterEscale(a3, d1, d2);
+
+        System.out.println(volSimple.toString());
 
         //Bidirectional
         Vol vol = new Vol();

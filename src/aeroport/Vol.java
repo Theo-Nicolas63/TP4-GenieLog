@@ -57,6 +57,10 @@ public class Vol {
         this.trajet = new Trajet(depart, arrivee, dateDepart, dateArrivee);
     }
 
+    public void ajouterEscale(Aeroport escale, Date datearrivee, Date datedepart) {
+        this.trajet.getSaut().ajouterEscale(escale, datearrivee, datedepart);
+    }
+
     public Compagnie getCompagnie() {
         return compagnie;
     }
@@ -105,7 +109,7 @@ public class Vol {
 
     //Récupère la liste des escales du vol
     public List<Etape> getEscales(){
-        return trajet.getEscales();
+        return trajet.getSaut().getEtapesEscales();
     }
 
     @Override
@@ -115,5 +119,22 @@ public class Vol {
         } catch (Exception e){
             return false;
         }
+    }
+
+    @Override
+    public String toString(){
+        String aeroportdepartString = trajet.getSaut().getEtapeDepart().getAeroport().getNom();
+        String aeroportarriveeString = trajet.getLastSaut().getEtapeArrivee().getAeroport().getNom();
+        String escalesString = "";
+        List<Etape> escales = trajet.getSaut().getEtapesEscales();
+
+        for (Etape etape : escales) {
+            escalesString += escalesString + " " + etape.getAeroport().getNom();
+        }
+
+        if(!escales.isEmpty())
+            return "Le vol " + this.numero + " au départ de " + aeroportdepartString + " à destination de " + aeroportarriveeString + "\nfera escale à " + escalesString;
+
+        return "Le vol " + this.numero + " au départ de " + aeroportdepartString + " à destination de " + aeroportarriveeString;
     }
 }
