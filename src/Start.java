@@ -1,3 +1,4 @@
+import aeroport.Aeroport;
 import aeroport.Compagnie;
 import aeroport.Vol;
 
@@ -23,10 +24,10 @@ public class Start {
         System.out.println(volFinal.getDateArrivee());
         System.out.println(volFinal.obtenirDuree().toString().substring(2));
 
-
-
-
-
+        //CREATION VOL SIMPLE
+        Aeroport a1 = new Aeroport("Charles de Gaulle", "Paris");
+        Aeroport a2 = new Aeroport("Blagnac", "Toulouse");
+        Vol volSimple = new Vol("AF1", a1, a2, format.parse(dd), format.parse(da));
 
         //Bidirectional
         Vol vol = new Vol();

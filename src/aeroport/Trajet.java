@@ -1,13 +1,15 @@
 package aeroport;
 
 import java.util.List;
+import java.util.Date;
+
 
 public class Trajet {
 
     private Saut saut;
 
-    public Trajet(Saut saut) {
-        this.saut = saut;
+    public Trajet(Aeroport depart, Aeroport arrivee, Date dateDepart, Date dateArrivee) {
+        this.saut = new Saut(depart, arrivee, dateDepart, dateArrivee);
     }
 
     public Saut getSaut() {

@@ -2,6 +2,8 @@ package aeroport;
 
 import java.sql.Date;
 import java.time.Duration;
+import java.util.Date;
+
 
 public class Etape {
     
@@ -11,10 +13,9 @@ public class Etape {
 
     private Duration duree;
 
-    public Etape(Date date, Aeroport aeroport, Duration duree) {
+    public Etape(Date date, Aeroport aeroport) {
         this.date = date;
         this.aeroport = aeroport;
-        this.duree = duree;
     }
 
     public Date getDate() {

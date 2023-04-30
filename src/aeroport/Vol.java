@@ -47,8 +47,14 @@ public class Vol {
     public Vol() {
     }
 
-    protected Vol(String numero){
+    //PROTECTED ????
+    protected Vol(String numero) {
         this.numero = numero;
+    }
+
+    public Vol(String numero, Aeroport depart, Aeroport arrivee, Date dateDepart, Date dateArrivee) {
+        this.numero = numero;
+        this.trajet = new Trajet(depart, arrivee, dateDepart, dateArrivee);
     }
 
     public Compagnie getCompagnie() {

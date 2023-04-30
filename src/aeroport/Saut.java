@@ -1,6 +1,9 @@
 package aeroport;
 
 import java.util.List;
+import java.util.Date;
+import java.util.ArrayList;
+
 
 public class Saut {
 
@@ -10,9 +13,9 @@ public class Saut {
 
     private Saut suivant;
 
-    public Saut(Etape depart, Etape arrivee) {
-        this.depart = depart;
-        this.arrivee = arrivee;
+    public Saut(Aeroport depart, Aeroport arrivee, Date dateDepart, Date dateArrivee) {
+        this.depart = new Etape(dateDepart, depart);
+        this.arrivee = new Etape(dateArrivee, arrivee);
         this.suivant = null;
     }
 
