@@ -4,13 +4,13 @@ public class Aeroport {
 
     private String nom;
 
-    private String ville;
+    private Ville ville;
 
     private String code;
 
     public Aeroport(String nom, String ville) {
         this.nom = nom;
-        this.ville = ville;
+        this.ville = new Ville(ville);
     }
 
     public String getNom() {
@@ -22,11 +22,11 @@ public class Aeroport {
     }
 
     public String getVille() {
-        return ville;
+        return ville.getNom();
     }
 
     public void setVille(String ville) {
-        this.ville = ville;
+        this.ville = new Ville(ville);
     }
 
     public void setCode(String code) {

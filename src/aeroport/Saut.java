@@ -14,6 +14,10 @@ public class Saut {
     private Saut suivant;
 
     public Saut(Aeroport depart, Aeroport arrivee, Date dateDepart, Date dateArrivee) {
+
+        if(!dateDepart.before(dateArrivee))
+            throw new IllegalArgumentException("La date de départ doit etre anterieure à la date d'arrivée");
+
         this.depart = new Etape(dateDepart, depart);
         this.arrivee = new Etape(dateArrivee, arrivee);
         this.suivant = null;
@@ -61,7 +65,6 @@ public class Saut {
 
             suiv = suiv.getSuivant();
         }
-
         return escales;
     }
 
@@ -72,6 +75,26 @@ public class Saut {
         Saut suiv = new Saut(escale, s.arrivee);
         s.arrivee = escale;
         s.suivant = suiv;
+    }
+
+    public void setDateDepart(Date date){
+        if(isDateDepartValid(date))
+            depart.setDate(date);
+    }
+
+    public void setDateArrivee(Date date){
+        if(isDateArriveeValid(date))
+            arrivee.setDate(date);
+    }
+
+    //Vérifie si la nouvelle date de départ est bien anterieure à la date d'arrivée
+    public boolean isDateDepartValid(Date date){
+        return arrivee.getDate().after(date);
+    }
+
+    //Vérifie si la nouvelle date d'arrivée est bien après la date de départ
+    public boolean isDateArriveeValid(Date date){
+        return depart.getDate().before(date);
     }
 
 }

@@ -22,7 +22,7 @@ public class Start {
         }
 
         System.out.println(volFinal.getDateArrivee());
-        System.out.println(volFinal.obtenirDuree().toString().substring(2));
+        //System.out.println(volFinal.obtenirDuree().toString().substring(2));
 
         //CREATION VOL SIMPLE
         Aeroport a1 = new Aeroport("Charles de Gaulle", "Paris");
@@ -31,6 +31,7 @@ public class Start {
         Date d1 = new Date(103384);
         Date d2 = new Date(103384);
         Vol volSimple = new Vol("AF1", a1, a2, d1, d2);
+        volSimple.ajouterEscale(a3, d1, d2);
         volSimple.ajouterEscale(a3, d1, d2);
 
         System.out.println(volSimple.toString());

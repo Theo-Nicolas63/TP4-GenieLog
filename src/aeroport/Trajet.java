@@ -24,4 +24,9 @@ public class Trajet {
         return saut.getLastSaut();
     }
 
+      //Récupère la liste des escales du vol
+      public List<Etape> getEscales(){
+        return saut.getEtapesEscales();
+    }
+
 }

@@ -12,15 +12,8 @@ public class Vol {
     private Trajet trajet; 
 
     private Compagnie compagnie;
-    
-    //private Aeroport depart;
 
-    //private Aeroport arrivee;
-
-    private Date dateDepart;
-
-    private Date dateArrivee;
-
+    /* 
     public Duration obtenirDuree() {
         if(this.dateDepart != null && this.dateArrivee != null) {
             return Duration.of(dateArrivee.getTime() - dateDepart.getTime(), ChronoUnit.MILLIS);
@@ -28,20 +21,22 @@ public class Vol {
         return null;
     }
 
+    */
+
     public Date getDateDepart() {
-        return dateDepart;
+        return trajet.getSaut().getEtapeDepart().getDate();
     }
 
     public void setDateDepart(Date dateDepart) {
-        this.dateDepart = dateDepart;
+        trajet.getSaut().setDateDepart(dateDepart);
     }
 
     public Date getDateArrivee() {
-        return dateArrivee;
+        return trajet.getLastSaut().getEtapeArrivee().getDate();
     }
 
     public void setDateArrivee(Date dateArrivee) {
-        this.dateArrivee = dateArrivee;
+        trajet.getLastSaut().setDateArrivee(dateArrivee);
     }
 
     public Vol() {
@@ -57,6 +52,7 @@ public class Vol {
         this.trajet = new Trajet(depart, arrivee, dateDepart, dateArrivee);
     }
 
+    //Appelle la méthode ajouter Escale de la classe saut
     public void ajouterEscale(Aeroport escale, Date datearrivee, Date datedepart) {
         this.trajet.getSaut().ajouterEscale(escale, datearrivee, datedepart);
     }
@@ -109,7 +105,7 @@ public class Vol {
 
     //Récupère la liste des escales du vol
     public List<Etape> getEscales(){
-        return trajet.getSaut().getEtapesEscales();
+        return trajet.getEscales();
     }
 
     @Override
@@ -129,7 +125,7 @@ public class Vol {
         List<Etape> escales = trajet.getSaut().getEtapesEscales();
 
         for (Etape etape : escales) {
-            escalesString += escalesString + " " + etape.getAeroport().getNom();
+            escalesString += " " + etape.getAeroport().getNom();
         }
 
         if(!escales.isEmpty())
