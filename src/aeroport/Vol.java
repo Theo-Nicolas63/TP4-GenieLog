@@ -13,15 +13,15 @@ public class Vol {
 
     private Compagnie compagnie;
 
-    /* 
+    
     public Duration obtenirDuree() {
-        if(this.dateDepart != null && this.dateArrivee != null) {
-            return Duration.of(dateArrivee.getTime() - dateDepart.getTime(), ChronoUnit.MILLIS);
+        Date depart = this.trajet.getSaut().getEtapeDepart().getDate();
+        Date arrivee = this.trajet.getLastSaut().getEtapeArrivee().getDate();
+        if( depart != null && arrivee != null) {
+            return Duration.of(arrivee.getTime() - depart.getTime(), ChronoUnit.MILLIS);
         }
         return null;
     }
-
-    */
 
     public Date getDateDepart() {
         return trajet.getSaut().getEtapeDepart().getDate();

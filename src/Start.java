@@ -8,7 +8,7 @@ import java.util.Date;
 public class Start {
 
     public static void main(String[] args){
-        Vol volFinal = new Vol();
+        /*Vol volFinal = new Vol();
 
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy hh:mm");
         String dd = "21/10/2020 13:00";
@@ -20,21 +20,22 @@ public class Start {
         } catch (Exception e){
             throw new RuntimeException("Unable to format to date");
         }
-
-        System.out.println(volFinal.getDateArrivee());
+        */
+       //System.out.println(volFinal.getDateArrivee());
         //System.out.println(volFinal.obtenirDuree().toString().substring(2));
 
         //CREATION VOL SIMPLE
         Aeroport a1 = new Aeroport("Charles de Gaulle", "Paris");
         Aeroport a2 = new Aeroport("Blagnac", "Toulouse");
         Aeroport a3 = new Aeroport("Saint-Exupéry", "Lyon");
-        Date d1 = new Date(103384);
+        Date d1 = new Date(103381);
         Date d2 = new Date(103384);
         Vol volSimple = new Vol("AF1", a1, a2, d1, d2);
         volSimple.ajouterEscale(a3, d1, d2);
         volSimple.ajouterEscale(a3, d1, d2);
 
-        System.out.println(volSimple.toString());
+        System.out.println(volSimple.toString() + "\n");
+        System.out.println("Durée : " + volSimple.obtenirDuree().toMillis());
 
         //Bidirectional
         Vol vol = new Vol();
