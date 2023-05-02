@@ -1,16 +1,16 @@
 package aeroport;
 
 import java.time.Duration;
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 
 public class Etape {
     
-    private Date date;
+    private ZonedDateTime date;
 
     private Aeroport aeroport;
 
-    public Etape(Date date, Aeroport aeroport) {
+    public Etape(Zoned date, Aeroport aeroport) {
         this.date = date;
         this.aeroport = aeroport;
     }

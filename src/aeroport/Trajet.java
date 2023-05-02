@@ -8,7 +8,7 @@ public class Trajet {
 
     private Saut saut;
 
-    public Trajet(Aeroport depart, Aeroport arrivee, Date dateDepart, Date dateArrivee) {
+    public Trajet(Aeroport depart, Aeroport arrivee, ZonedDateTime dateDepart, ZonedDateTime dateArrivee) {
         this.saut = new Saut(depart, arrivee, dateDepart, dateArrivee);
     }
 

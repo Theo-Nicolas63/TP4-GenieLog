@@ -23,7 +23,7 @@ public class Vol {
         return null;
     }
 
-    public Date getDateDepart() {
+    public ZonedDateTime getDateDepart() {
         return trajet.getSaut().getEtapeDepart().getDate();
     }
 
@@ -31,7 +31,7 @@ public class Vol {
         trajet.getSaut().setDateDepart(dateDepart);
     }
 
-    public Date getDateArrivee() {
+    public ZonedDateTime getDateArrivee() {
         return trajet.getLastSaut().getEtapeArrivee().getDate();
     }
 
@@ -47,13 +47,13 @@ public class Vol {
         this.numero = numero;
     }
 
-    public Vol(String numero, Aeroport depart, Aeroport arrivee, Date dateDepart, Date dateArrivee) {
+    public Vol(String numero, Aeroport depart, Aeroport arrivee, ZonedDateTime dateDepart, ZonedDateTime dateArrivee) {
         this.numero = numero;
         this.trajet = new Trajet(depart, arrivee, dateDepart, dateArrivee);
     }
 
     //Appelle la méthode ajouter Escale de la classe saut
-    public void ajouterEscale(Aeroport escale, Date datearrivee, Date datedepart) {
+    public void ajouterEscale(Aeroport escale, ZonedDateTime datearrivee, ZonedDateTime datedepart) {
         this.trajet.getSaut().ajouterEscale(escale, datearrivee, datedepart);
     }
 

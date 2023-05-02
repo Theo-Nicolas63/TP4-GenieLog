@@ -7,6 +7,7 @@ public class Client {
     private String paiement;
     private String numeroCB;
 
+    
     public Client(String nom, Integer reference, String paiement, String numeroCB) {
         this.nom = nom;
         this.reference = reference;
