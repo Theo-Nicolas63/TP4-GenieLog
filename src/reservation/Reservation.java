@@ -1,12 +1,18 @@
 package reservation;
 
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Reservation {
 
     private Client client;
-    private Date date;
+    private ZonedDateTime date;
     private Integer id;
+    private Passager passager;
+    private Vol vol;
 
-    private List<Passager> passagers = new ArrayList<>();
+    private boolean isPaid = false;
 
     public Reservation() {
     }
@@ -15,7 +21,7 @@ public class Reservation {
         return client;
     }
 
-    public void setClient(String client) {
+    public void setClient(Client client) {
         this.client = client;
     }
 
@@ -23,19 +29,17 @@ public class Reservation {
         return passagers;
     }
 
-    public void ajouterPassager(String nom, String prenom, Integer iD) {
-        this.passagers.add(new Passager(nom, prenom, iD));
-    }
-
     public void annuler(){
-
+        vol.getReservations().remove(this);
+        vol = null;
     }
 
     public void confirmer(){
-
+        System.out.println("La reservation numero : " + id + " a été confirme");
     }
 
     public void payer(){
-        
+        isPaid = true;
+        confirmer();
     }
 }

@@ -10,12 +10,12 @@ public class Etape {
 
     private Aeroport aeroport;
 
-    public Etape(Zoned date, Aeroport aeroport) {
+    public Etape(ZonedDateTime date, Aeroport aeroport) {
         this.date = date;
         this.aeroport = aeroport;
     }
 
-    public Date getDate() {
+    public ZonedDateTime getDate() {
         return date;
     }
 
@@ -27,7 +27,7 @@ public class Etape {
         this.aeroport = aeroport;
     }
 
-    public void setDate(Date date) {
+    public void setDate(ZonedDateTime date) {
         this.date = date;
     }
 

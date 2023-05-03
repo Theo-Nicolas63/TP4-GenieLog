@@ -3,6 +3,7 @@ package aeroport;
 import java.util.List;
 import java.util.Date;
 import java.util.ArrayList;
+import java.time.ZonedDateTime;
 
 
 public class Saut {
@@ -13,9 +14,9 @@ public class Saut {
 
     private Saut suivant;
 
-    public Saut(Aeroport depart, Aeroport arrivee, Date dateDepart, Date dateArrivee) {
+    public Saut(Aeroport depart, Aeroport arrivee, ZonedDateTime dateDepart, ZonedDateTime dateArrivee) {
 
-        if(!dateDepart.before(dateArrivee))
+        if(!dateDepart.isBefore(dateArrivee))
             throw new IllegalArgumentException("La date de départ doit etre anterieure à la date d'arrivée");
 
         this.depart = new Etape(dateDepart, depart);
@@ -69,7 +70,7 @@ public class Saut {
     }
 
     //Ajoute une escale au milieu du dernier saut du vol
-    public void ajouterEscale(Aeroport aeroportEscale, Date datearrivee, Date datedepart){
+    public void ajouterEscale(Aeroport aeroportEscale, ZonedDateTime datearrivee, ZonedDateTime datedepart){
         Saut s = getLastSaut();
         Etape escale = new Etape(datearrivee, aeroportEscale);
         Saut suiv = new Saut(escale, s.arrivee);
@@ -77,24 +78,24 @@ public class Saut {
         s.suivant = suiv;
     }
 
-    public void setDateDepart(Date date){
+    public void setDateDepart(ZonedDateTime date){
         if(isDateDepartValid(date))
             depart.setDate(date);
     }
 
-    public void setDateArrivee(Date date){
+    public void setDateArrivee(ZonedDateTime date){
         if(isDateArriveeValid(date))
             arrivee.setDate(date);
     }
 
     //Vérifie si la nouvelle date de départ est bien anterieure à la date d'arrivée
-    public boolean isDateDepartValid(Date date){
-        return arrivee.getDate().after(date);
+    public boolean isDateDepartValid(ZonedDateTime date){
+        return arrivee.getDate().isAfter(date);
     }
 
     //Vérifie si la nouvelle date d'arrivée est bien après la date de départ
-    public boolean isDateArriveeValid(Date date){
-        return depart.getDate().before(date);
+    public boolean isDateArriveeValid(ZonedDateTime date){
+        return depart.getDate().isBefore(date);
     }
 
 }

@@ -1,9 +1,10 @@
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Date;
+
 import aeroport.Aeroport;
 import aeroport.Compagnie;
 import aeroport.Vol;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class Start {
 
@@ -28,14 +29,16 @@ public class Start {
         Aeroport a1 = new Aeroport("Charles de Gaulle", "Paris");
         Aeroport a2 = new Aeroport("Blagnac", "Toulouse");
         Aeroport a3 = new Aeroport("Saint-Exupéry", "Lyon");
-        Date d1 = new Date(103381);
-        Date d2 = new Date(103384);
+        ZonedDateTime d1 = ZonedDateTime.of(2023, 6, 12, 0, 0, 0, 0, ZoneId.of("Europe/Paris"));
+        ZonedDateTime d2 = ZonedDateTime.of(2023, 6, 12, 13, 0, 0, 0, ZoneId.of("Europe/Paris"));
+        ZonedDateTime d3 = ZonedDateTime.of(2023, 6, 12, 0, 0, 0, 0, ZoneId.of("America/New_York"));
+
         Vol volSimple = new Vol("AF1", a1, a2, d1, d2);
         volSimple.ajouterEscale(a3, d1, d2);
         volSimple.ajouterEscale(a3, d1, d2);
 
         System.out.println(volSimple.toString() + "\n");
-        System.out.println("Durée : " + volSimple.obtenirDuree().toMillis());
+        System.out.println("Durée : " + volSimple.obtenirDuree().toHours());
 
         //Bidirectional
         Vol vol = new Vol();
