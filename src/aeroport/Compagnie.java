@@ -61,4 +61,13 @@ public class Compagnie {
     protected void removeVolWithoutBidirectional(Vol vol){
         this.vols.remove(vol);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o instanceof Compagnie){
+            Compagnie compagnie = (Compagnie) o;
+            return this.name.equals(compagnie.name);
+        }
+        return false;
+    }
 }

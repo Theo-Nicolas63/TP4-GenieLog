@@ -126,11 +126,25 @@ public class Vol {
     }
 
     public void ajouterReservation(Reservation reservation) {
-        this.reservations.add(reservation);
+
+        if(reservations.size() < 150)
+            this.reservations.add(reservation);
+        else {
+            throw new IllegalArgumentException("Le vol est complet");
+        }
     }
 
     public List<Reservation> getReservations() {
         return reservations;
+    }
+
+    public void fermer(Compagnie compagnie){
+        if(this.compagnie.equals(compagnie)){
+            this.IsReservable = false;
+        }
+        else {
+            throw new IllegalArgumentException("La compagnie n'est pas autorisée à fermer ce vol");
+        }
     }
 
     @Override
