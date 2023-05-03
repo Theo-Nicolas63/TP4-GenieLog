@@ -21,8 +21,8 @@ public class Reservation {
         return client;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setClient(String client) {
+        //this.client = new Client(client, 0, "ququbc");
     }
 
     public List<Passager> getPassagers() {
