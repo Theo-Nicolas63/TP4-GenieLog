@@ -1,8 +1,8 @@
 package reservation;
-
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.List;
+
+import aeroport.Vol;
 
 public class Reservation {
 
@@ -17,16 +17,16 @@ public class Reservation {
     public Reservation() {
     }
 
-    public String getClient() {
+    public Client getClient() {
         return client;
     }
 
-    public void setClient(String client) {
-        //this.client = new Client(client, 0, "ququbc");
+    public void setClient(Client client) {
+        this.client = client;
     }
 
-    public List<Passager> getPassagers() {
-        return passagers;
+    public Passager getPassager() {
+        return passager;
     }
 
     public void annuler(){
