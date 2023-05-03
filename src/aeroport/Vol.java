@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
+import java.time.ZonedDateTime;
 
 public class Vol {
 
@@ -15,10 +16,10 @@ public class Vol {
 
     
     public Duration obtenirDuree() {
-        Date depart = this.trajet.getSaut().getEtapeDepart().getDate();
-        Date arrivee = this.trajet.getLastSaut().getEtapeArrivee().getDate();
+        ZonedDateTime depart = this.trajet.getSaut().getEtapeDepart().getDate();
+        ZonedDateTime arrivee = this.trajet.getLastSaut().getEtapeArrivee().getDate();
         if( depart != null && arrivee != null) {
-            return Duration.of(arrivee.getTime() - depart.getTime(), ChronoUnit.MILLIS);
+            return Duration.between(depart, arrivee);
         }
         return null;
     }
@@ -27,7 +28,7 @@ public class Vol {
         return trajet.getSaut().getEtapeDepart().getDate();
     }
 
-    public void setDateDepart(Date dateDepart) {
+    public void setDateDepart(ZonedDateTime dateDepart) {
         trajet.getSaut().setDateDepart(dateDepart);
     }
 
@@ -35,7 +36,7 @@ public class Vol {
         return trajet.getLastSaut().getEtapeArrivee().getDate();
     }
 
-    public void setDateArrivee(Date dateArrivee) {
+    public void setDateArrivee(ZonedDateTime dateArrivee) {
         trajet.getLastSaut().setDateArrivee(dateArrivee);
     }
 
