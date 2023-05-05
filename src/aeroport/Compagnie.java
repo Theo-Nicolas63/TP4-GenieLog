@@ -7,14 +7,14 @@ public class Compagnie {
 
     private String name;
 
-    private String prefixe;
+    private GeneratorNumeroVol generatorNumeroVol;
 
     private Collection<Vol> vols = new ArrayList<>();
 
 
     public Compagnie(String nom, String prefixe) {
         this.name = nom;
-        this.prefixe = prefixe;
+        this.generatorNumeroVol = new GeneratorNumeroVol(prefixe);
     }
 
     public String getName() {
@@ -27,6 +27,10 @@ public class Compagnie {
 
     public Collection<Vol> getVols() {
         return vols;
+    }
+
+    public GeneratorNumeroVol getGeneratorNumeroVol() {
+        return generatorNumeroVol;
     }
 
     public void setVols(Collection<Vol> vols) {

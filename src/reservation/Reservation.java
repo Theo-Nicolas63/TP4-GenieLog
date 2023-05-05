@@ -15,11 +15,18 @@ public class Reservation {
     private boolean isPaid = false;
 
     public Reservation(Client client, Passager passager, Vol vol) {
-        this.client = client;
-        this.passager = passager;
-        this.vol = vol;
-        this.date = ZonedDateTime.now();
-        this.id = vol.getNumero() + client.getNom() + date.toString(); // Construction de l'id de reservation
+
+        if(vol.isReservable() && ZonedDateTime.now().isBefore(vol.getDateDepart())){
+            this.client = client;
+            this.passager = passager;
+            this.vol = vol;
+            this.date = ZonedDateTime.now();
+            this.id = vol.getNumero() + client.getNom() + date.toString(); // Construction de l'id de reservation
+         }
+         else{
+             System.out.println("Impossible de reserver ce vol");
+         }
+
     }
 
     public Client getClient() {

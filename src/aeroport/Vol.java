@@ -22,9 +22,26 @@ public class Vol {
 
     private Compagnie compagnie;
 
+    private boolean IsReservable = true;
+
     private List<Reservation> reservations = new ArrayList<>();
 
+
+        //PROTECTED ????
+        protected Vol(String numero) {
+            this.numero = numero;
+        }
     
+        //VERIF DATE ??
+        public Vol(Aeroport depart, Aeroport arrivee, Date dateDepart, Date dateArrivee) {
+    
+            ZonedDateTime ZdateDepart = ZonedDateConverter.DateToZonedDateTime(dateDepart, depart.getZoneId());
+            ZonedDateTime ZdateArrivee = ZonedDateConverter.DateToZonedDateTime(dateArrivee, arrivee.getZoneId());
+    
+            this.trajet = new Trajet(depart, arrivee, ZdateDepart, ZdateArrivee);
+        }
+
+
     public Duration obtenirDuree() {
         ZonedDateTime depart = this.trajet.getSaut().getEtapeDepart().getDate();
         ZonedDateTime arrivee = this.trajet.getLastSaut().getEtapeArrivee().getDate();
@@ -54,24 +71,12 @@ public class Vol {
         trajet.getLastSaut().setDateArrivee(ZdateDArrivee);
     }
 
-    //PROTECTED ????
-    protected Vol(String numero) {
-        this.numero = numero;
-    }
-
-    //VERIF DATE ??
-    public Vol(String numero, Aeroport depart, Aeroport arrivee, Date dateDepart, Date dateArrivee) {
-
-        ZonedDateTime ZdateDepart = ZonedDateConverter.DateToZonedDateTime(dateDepart, depart.getZoneId());
-        ZonedDateTime ZdateArrivee = ZonedDateConverter.DateToZonedDateTime(dateArrivee, arrivee.getZoneId());
-
-        this.numero = numero;
-        this.trajet = new Trajet(depart, arrivee, ZdateDepart, ZdateArrivee);
-    }
-
     //Appelle la méthode ajouter Escale de la classe saut
-    public void ajouterEscale(Aeroport escale, ZonedDateTime datearrivee, ZonedDateTime datedepart) {
-        this.trajet.getSaut().ajouterEscale(escale, datearrivee, datedepart);
+    public void ajouterEscale(Aeroport escale, Date datearrivee, Date datedepart) {
+        ZonedDateTime ZdateDepart = ZonedDateConverter.DateToZonedDateTime(datedepart, escale.getZoneId());
+        ZonedDateTime ZdateArrivee = ZonedDateConverter.DateToZonedDateTime(datearrivee, escale.getZoneId());
+
+        this.trajet.getSaut().ajouterEscale(escale, ZdateArrivee, ZdateDepart);
     }
 
     public Compagnie getCompagnie() {
@@ -154,6 +159,10 @@ public class Vol {
         else {
             throw new IllegalArgumentException("La compagnie n'est pas autorisée à fermer ce vol");
         }
+    }
+
+    public boolean isReservable(){
+        return this.IsReservable;
     }
 
     @Override

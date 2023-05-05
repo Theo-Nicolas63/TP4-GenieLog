@@ -74,14 +74,18 @@ public class Start {
         }
         //CREATION VOL    
 
-        Vol volSimple = new Vol("AF1", a1, a2, dd1, dd2);
+        Vol volSimple = new Vol(a1, a2, dd1, da1);
         volSimple.ajouterEscale(a3, da2, dd2);
+
+        compagnie1.addVol(volSimple);
+        volSimple.setNumero(compagnie1.getGeneratorNumeroVol().next());
         //volSimple.ajouterEscale(a3, d1, d2);
 
         System.out.println(volSimple.toString() + "\n");
         System.out.println("Durée : " + volSimple.obtenirDuree().toHours());
 
         //Bidirectional
+        /* 
         Vol vol = new Vol();
         vol.setNumero("abc1");
 
@@ -108,5 +112,7 @@ public class Start {
         }
 
         Reservation v1 = new Reservation(volSimple, compagnie);
+
+        */
     }
 }
