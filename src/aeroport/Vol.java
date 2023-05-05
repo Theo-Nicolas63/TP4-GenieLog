@@ -5,6 +5,9 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import converter.ZonedDateConverter;
+
 import java.time.ZonedDateTime;
 
 import reservation.Reservation;
@@ -35,19 +38,20 @@ public class Vol {
         return trajet.getSaut().getEtapeDepart().getDate();
     }
 
-    public void setDateDepart(ZonedDateTime dateDepart) {
-        trajet.getSaut().setDateDepart(dateDepart);
+    //VERIF DATE
+    public void setDateDepart(Date dateDepart) {
+        ZonedDateTime ZdateDepart = ZonedDateConverter.DateToZonedDateTime(dateDepart, this.trajet.getSaut().getEtapeDepart().getAeroport().getZoneId());
+        trajet.getSaut().setDateDepart(ZdateDepart);
     }
 
     public ZonedDateTime getDateArrivee() {
         return trajet.getLastSaut().getEtapeArrivee().getDate();
     }
 
-    public void setDateArrivee(ZonedDateTime dateArrivee) {
-        trajet.getLastSaut().setDateArrivee(dateArrivee);
-    }
-
-    public Vol() {
+    //VERIF DATE
+    public void setDateArrivee(Date dateArrivee) {
+        ZonedDateTime ZdateDArrivee = ZonedDateConverter.DateToZonedDateTime(dateArrivee, this.trajet.getLastSaut().getEtapeArrivee().getAeroport().getZoneId());
+        trajet.getLastSaut().setDateArrivee(ZdateDArrivee);
     }
 
     //PROTECTED ????
@@ -55,9 +59,14 @@ public class Vol {
         this.numero = numero;
     }
 
-    public Vol(String numero, Aeroport depart, Aeroport arrivee, ZonedDateTime dateDepart, ZonedDateTime dateArrivee) {
+    //VERIF DATE ??
+    public Vol(String numero, Aeroport depart, Aeroport arrivee, Date dateDepart, Date dateArrivee) {
+
+        ZonedDateTime ZdateDepart = ZonedDateConverter.DateToZonedDateTime(dateDepart, depart.getZoneId());
+        ZonedDateTime ZdateArrivee = ZonedDateConverter.DateToZonedDateTime(dateArrivee, arrivee.getZoneId());
+
         this.numero = numero;
-        this.trajet = new Trajet(depart, arrivee, dateDepart, dateArrivee);
+        this.trajet = new Trajet(depart, arrivee, ZdateDepart, ZdateArrivee);
     }
 
     //Appelle la méthode ajouter Escale de la classe saut

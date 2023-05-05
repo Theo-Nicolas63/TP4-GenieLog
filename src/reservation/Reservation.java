@@ -8,13 +8,18 @@ public class Reservation {
 
     private Client client;
     private ZonedDateTime date;
-    private Integer id;
+    private String id;
     private Passager passager;
     private Vol vol;
 
     private boolean isPaid = false;
 
-    public Reservation() {
+    public Reservation(Client client, Passager passager, Vol vol) {
+        this.client = client;
+        this.passager = passager;
+        this.vol = vol;
+        this.date = ZonedDateTime.now();
+        this.id = vol.getNumero() + client.getNom() + date.toString(); // Construction de l'id de reservation
     }
 
     public Client getClient() {

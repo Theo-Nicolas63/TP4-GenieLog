@@ -7,10 +7,14 @@ public class Compagnie {
 
     private String name;
 
+    private String prefixe;
+
     private Collection<Vol> vols = new ArrayList<>();
 
 
-    public Compagnie() {
+    public Compagnie(String nom, String prefixe) {
+        this.name = nom;
+        this.prefixe = prefixe;
     }
 
     public String getName() {

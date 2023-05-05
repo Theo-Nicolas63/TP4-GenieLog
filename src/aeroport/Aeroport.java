@@ -1,5 +1,7 @@
 package aeroport;
 
+import java.time.ZoneId;
+
 public class Aeroport {
 
     private String nom;
@@ -8,9 +10,12 @@ public class Aeroport {
 
     private String code;
 
-    public Aeroport(String nom, String ville) {
+    private ZoneId zoneId;
+
+    public Aeroport(String nom, Ville ville, ZoneId zoneId) {
         this.nom = nom;
-        this.ville = new Ville(ville);
+        this.ville = ville;
+        this.zoneId = zoneId;
     }
 
     public String getNom() {
@@ -31,5 +36,9 @@ public class Aeroport {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public ZoneId getZoneId() {
+            return zoneId;
     }
 }
