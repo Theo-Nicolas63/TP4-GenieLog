@@ -2,8 +2,13 @@ package aeroport;
 
 public class Ville {
 
-    private String nom;
+    private String nom; 
 
+     /** 
+    * Constructeur de Ville
+    *  
+    * @param nom nom de la ville
+    */
     public Ville(String nom) {
         this.nom = nom;
     }

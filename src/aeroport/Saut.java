@@ -14,9 +14,10 @@ public class Saut {
 
     private Saut suivant;
 
+    //Constructeur 
     public Saut(Aeroport depart, Aeroport arrivee, ZonedDateTime dateDepart, ZonedDateTime dateArrivee) {
 
-        if(!dateDepart.isBefore(dateArrivee))
+        if(!dateDepart.isBefore(dateArrivee)) // Vérifie si la date de départ est bien antérieure à la date d'arrivée en tenant compte du fuseau horaire
             throw new IllegalArgumentException("La date de départ doit etre anterieure à la date d'arrivée");
 
         this.depart = new Etape(dateDepart, depart);
@@ -24,6 +25,7 @@ public class Saut {
         this.suivant = null;
     }
 
+    //Constructeur
     public Saut(Etape depart, Etape arrivee) {
         this.depart = depart;
         this.arrivee = arrivee;
@@ -41,6 +43,7 @@ public class Saut {
         return this.suivant;
     }
 
+    //Retourne le dernier saut
     public Saut getLastSaut(){
         Saut last = this;
 

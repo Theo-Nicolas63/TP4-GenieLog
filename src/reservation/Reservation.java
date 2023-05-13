@@ -29,6 +29,10 @@ public class Reservation {
 
     }
 
+    public String getId() {
+        return id;
+    }
+
     public Client getClient() {
         return client;
     }
@@ -50,8 +54,32 @@ public class Reservation {
         System.out.println("La reservation numero : " + id + " a été confirme");
     }
 
+    public Vol getVol(){
+        return this.vol;
+    }
+
+    //Set Vol avec bidirectional avec la classe Vol
+    public void setVolWithBidirectional(Vol vol){
+        
+        this.vol = vol;
+
+        if(!vol.getReservations().contains(this))
+            vol.ajouterReservationWithBidirectional(this);
+    }
+
     public void payer(){
         isPaid = true;
         confirmer();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+
+        if (o instanceof Reservation) {
+            Reservation r = (Reservation) o;
+            return this.id.equals(r.getId());
+        }
+
+        return false;
     }
 }

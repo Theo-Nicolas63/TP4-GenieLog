@@ -78,7 +78,6 @@ public class Start {
         volSimple.ajouterEscale(a3, da2, dd2);
 
         compagnie1.addVol(volSimple);
-        volSimple.setNumero(compagnie1.getGeneratorNumeroVol().next());
         //volSimple.ajouterEscale(a3, d1, d2);
 
         System.out.println(volSimple.toString() + "\n");

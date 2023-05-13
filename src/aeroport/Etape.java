@@ -10,6 +10,7 @@ public class Etape {
 
     private Aeroport aeroport;
 
+    //Constructeur
     public Etape(ZonedDateTime date, Aeroport aeroport) {
         this.date = date;
         this.aeroport = aeroport;
