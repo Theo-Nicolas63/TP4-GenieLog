@@ -22,26 +22,37 @@ public class Vol {
 
     private Compagnie compagnie;
 
-    private boolean IsReservable = true;
+    private boolean IsReservable = false;
 
     private List<Reservation> reservations = new ArrayList<>();
 
 
-        //PROTECTED ????
-        protected Vol(String numero) {
-            this.numero = numero;
-        }
+    //PROTECTED 
+    protected Vol(String numero) {
+        this.numero = numero;
+    }
     
-        //VERIF DATE ??
-        public Vol(Aeroport depart, Aeroport arrivee, Date dateDepart, Date dateArrivee) {
+     /** 
+    * Constructeur de Vol
+    *  
+    * @param depart Aerport de départ
+    * @param arrivee Aeroport d'arrivée
+    * @param dateDepart Date de départ 
+    * @param dateArrivee Aeriport d'arrivée
+    */
+    public Vol(Aeroport depart, Aeroport arrivee, Date dateDepart, Date dateArrivee) {
     
-            ZonedDateTime ZdateDepart = ZonedDateConverter.DateToZonedDateTime(dateDepart, depart.getZoneId());
-            ZonedDateTime ZdateArrivee = ZonedDateConverter.DateToZonedDateTime(dateArrivee, arrivee.getZoneId());
+        ZonedDateTime ZdateDepart = ZonedDateConverter.DateToZonedDateTime(dateDepart, depart.getZoneId()); // Conversion en ZonedDateTime avec classe converter
+        ZonedDateTime ZdateArrivee = ZonedDateConverter.DateToZonedDateTime(dateArrivee, arrivee.getZoneId()); // Conversion en ZonedDateTime avec classe converter
     
-            this.trajet = new Trajet(depart, arrivee, ZdateDepart, ZdateArrivee);
-        }
+        this.trajet = new Trajet(depart, arrivee, ZdateDepart, ZdateArrivee); // Instanciation du trajet 
+    }
 
-
+    /** 
+    * Méthode permettant de récuprér la durée d'un vol en type Duration
+    *  
+    * @return la durée d'un vol
+    */
     public Duration obtenirDuree() {
         ZonedDateTime depart = this.trajet.getSaut().getEtapeDepart().getDate();
         ZonedDateTime arrivee = this.trajet.getLastSaut().getEtapeArrivee().getDate();
@@ -55,20 +66,44 @@ public class Vol {
         return trajet.getSaut().getEtapeDepart().getDate();
     }
 
-    //VERIF DATE
+    /** 
+    * Permet de set la date de départ du vol et donc du premier saut
+    *  
+    * @param dateDepart date de départ 
+    */
     public void setDateDepart(Date dateDepart) {
         ZonedDateTime ZdateDepart = ZonedDateConverter.DateToZonedDateTime(dateDepart, this.trajet.getSaut().getEtapeDepart().getAeroport().getZoneId());
-        trajet.getSaut().setDateDepart(ZdateDepart);
+
+        try {
+
+            if(this.trajet.getSaut().isDateDepartValid(ZdateDepart)) // Vérifie si la date de départ que l'on veut setter est bien avant la date d'arrivée
+                trajet.getSaut().setDateDepart(ZdateDepart);
+            else {
+                throw new IllegalArgumentException("Date invalide");
+             }
+        }
+        catch (Exception e)  {
+            System.out.println(e.getMessage());
+        }
+
     }
 
     public ZonedDateTime getDateArrivee() {
         return trajet.getLastSaut().getEtapeArrivee().getDate();
     }
 
-    //VERIF DATE
     public void setDateArrivee(Date dateArrivee) {
         ZonedDateTime ZdateDArrivee = ZonedDateConverter.DateToZonedDateTime(dateArrivee, this.trajet.getLastSaut().getEtapeArrivee().getAeroport().getZoneId());
-        trajet.getLastSaut().setDateArrivee(ZdateDArrivee);
+
+        try {
+            if(this.trajet.getLastSaut().isDateArriveeValid(ZdateDArrivee)) // Vérifie si la date que l'on veut setter est bien apres la date de départ du saut en question
+                trajet.getLastSaut().setDateArrivee(ZdateDArrivee);
+            else
+                throw new IllegalArgumentException("Date invalide !");
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     //Appelle la méthode ajouter Escale de la classe saut
@@ -95,14 +130,15 @@ public class Vol {
 
     protected void setCompagnieWithoutBidirectional(Compagnie compagnie) {
         this.compagnie = compagnie;
+        this.setNumero(); // set le numéro de vol lors de l'affectation à une compagnie
     }
 
     public String getNumero() {
         return numero;
     }
 
-    public void setNumero(String numero) {
-        this.numero = numero;
+    protected void setNumero() {
+        this.numero = this.compagnie.getGeneratorNumeroVol().next();
     }
 
      //Récupère l'aeroport de départ du vol
@@ -139,10 +175,15 @@ public class Vol {
         }
     }
 
-    public void ajouterReservation(Reservation reservation) {
-
-        if(reservations.size() < 150)
+    //Ajout d'une reservation à la liste des réservation avec Bidirectional
+    public void ajouterReservationWithBidirectional(Reservation reservation) {
+        
+        if(reservations.size() < 150){ // Limite de passagers
             this.reservations.add(reservation);
+            
+            if(!reservation.getVol().equals(this)) //IMPOSSIBLE DE CREER UNE RESERVATION SANS VOL DONC INUTILE OU DE CHANGER DE VOL SUR LA MEME RESERVATION
+                reservation.setVolWithBidirectional(this); 
+        } 
         else {
             throw new IllegalArgumentException("Le vol est complet");
         }
@@ -153,17 +194,53 @@ public class Vol {
     }
 
     public void fermer(Compagnie compagnie){
-        if(this.compagnie.equals(compagnie)){
-            this.IsReservable = false;
+
+        try {
+            if(this.compagnie.equals(compagnie)){
+                this.IsReservable = false;
+            }
+            else {
+                throw new IllegalArgumentException("La compagnie n'est pas autorisée à fermer ce vol");
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
-        else {
-            throw new IllegalArgumentException("La compagnie n'est pas autorisée à fermer ce vol");
+    }
+
+    public void ouvrir(Compagnie compagnie){
+
+        try {
+            if(this.compagnie.equals(compagnie)){
+                this.IsReservable = true;
+            }
+            else {
+                throw new IllegalArgumentException("La compagnie n'est pas autorisée à ouvrir ce vol");
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 
     public boolean isReservable(){
         return this.IsReservable;
     }
+
+    /** 
+     * Permet de décler le depart d'un vol qui ne possède pas d'escale
+     * @param delais : durée du décalage
+     * */ 
+    public void decaler(Duration delais){
+        if(this.trajet.getSaut().getEtapesEscales().isEmpty()){
+            this.trajet.getLastSaut().getEtapeArrivee().setDate(this.trajet.getLastSaut().getEtapeArrivee().getDate().plus(delais));
+            this.trajet.getSaut().getEtapeDepart().setDate(this.trajet.getSaut().getEtapeDepart().getDate().plus(delais));
+        }
+        else {
+            throw new IllegalArgumentException("Le vol possède des escales, il est donc impossible de le décaler");
+        }
+    }
+
 
     @Override
     public String toString(){

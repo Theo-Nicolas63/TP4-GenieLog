@@ -1,3 +1,4 @@
+import java.time.Duration;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
@@ -43,6 +44,8 @@ public class Start {
         Aeroport a4 = new Aeroport("Bordeaux-Mérignac", ville7, ZoneId.of("Europe/Paris"));
         Aeroport a5 = new Aeroport("JFK", ville9, ZoneId.of("America/New_York"));
 
+        a2.addVilleDesservie(ville5);
+
         //CREATION COMPAGNIE
         Compagnie compagnie1 = new Compagnie("AIR France", "AF");
         Compagnie compagnie2 = new Compagnie("EASY JET", "EJ");
@@ -51,10 +54,10 @@ public class Start {
 
         //CREATION DATE 
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy hh:mm");
-        String ddS = "21/10/2020 13:00";
-        String daS = "23/10/2020 02:15";
-        String ddS1 = "22/10/2020 13:00";
-        String daS1 = "22/10/2020 14:15";
+        String ddS = "21/10/2024 13:00";
+        String daS = "23/10/2024 02:15";
+        String ddS1 = "22/10/2024 13:00";
+        String daS1 = "22/10/2024 14:15";
 
         Date dd1 = null;
         Date da1 = null;
@@ -72,47 +75,44 @@ public class Start {
         } catch (Exception e){
             throw new RuntimeException("Unable to format to date");
         }
+
+
         //CREATION VOL    
+        Vol v1 = new Vol(a1, a2, dd1, da1);
+        v1.ajouterEscale(a3, da2, dd2);
 
-        Vol volSimple = new Vol(a1, a2, dd1, da1);
-        volSimple.ajouterEscale(a3, da2, dd2);
+        Vol v2 = new Vol(a2, a4, dd1, da2);
+        compagnie3.addVol(v2);
 
-        compagnie1.addVol(volSimple);
-        volSimple.setNumero(compagnie1.getGeneratorNumeroVol().next());
-        //volSimple.ajouterEscale(a3, d1, d2);
+        compagnie1.addVol(v1);
+        v1.ouvrir(compagnie1);
 
-        System.out.println(volSimple.toString() + "\n");
-        System.out.println("Durée : " + volSimple.obtenirDuree().toHours());
+        v2.decaler(Duration.ofSeconds(60)); // Décaler Vol de 1 heures
 
-        //Bidirectional
-        /* 
-        Vol vol = new Vol();
-        vol.setNumero("abc1");
+        System.out.println(v1.toString() + "\n"); // Afficher Vol
+        System.out.println("Durée : " + v1.obtenirDuree().toHours() + "h" + v1.obtenirDuree().toMinutes()%60 + "min"); 
 
-        Vol vol2 = new Vol();
-        vol2.setNumero("abc2");
+        //Bidirectional entre Reservation et Vol
+        Reservation reservation1 = new Reservation(client3, passager5, v1);
+        System.out.println("Ma reservation pour le vol :" + reservation1.getVol().getNumero());
 
-        Compagnie compagnie = new Compagnie();
-        compagnie.setName("Air France");
-        compagnie.addVol(vol);
-        compagnie.addVol(vol2);
+        System.out.println("Les réservations du vol " + v1.getNumero() + " sont :");
+        for (Reservation reservation : v1.getReservations()) {
+            System.out.println(reservation.getId());
+        }
 
-        for(Vol v : compagnie.getVols()){
+        System.out.println("Les vols de la compagnie " + compagnie1.getName() + " sont :");
+        for(Vol v : compagnie1.getVols()){
             System.out.println(v.getNumero());
         }
 
-        System.out.println(vol.getCompagnie().getName());
-        System.out.println(vol2.getCompagnie().getName());
-
-        vol2.setCompagnie(null);
-        System.out.println(vol2.getCompagnie());
-
-        for(Vol v : compagnie.getVols()){
-            System.out.println(v.getNumero());
+        //afficher les villes desservis par Blagnac
+        System.out.println("Les villes desservies par Blagnac sont :");
+        for(Ville v : a2.getVilleDesservies()){
+            System.out.println(v.getNom());
         }
 
-        Reservation v1 = new Reservation(volSimple, compagnie);
+    
 
-        */
     }
 }
