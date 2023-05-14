@@ -10,7 +10,6 @@ public class Client {
     
     public Client(String nom, String paiement, String numeroCB) {
         this.nom = nom;
-        this.reference = reference;
         this.paiement = paiement;
         this.numeroCB = numeroCB;
     }

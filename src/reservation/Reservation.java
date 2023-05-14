@@ -16,21 +16,28 @@ public class Reservation {
 
     public Reservation(Client client, Passager passager, Vol vol) {
 
-        if(vol.isReservable() && ZonedDateTime.now().isBefore(vol.getDateDepart())){
-            this.client = client;
-            this.passager = passager;
-            this.vol = vol;
-            this.date = ZonedDateTime.now();
-            this.id = vol.getNumero() + client.getNom() + date.toString(); // Construction de l'id de reservation
-         }
-         else{
-             System.out.println("Impossible de reserver ce vol");
-         }
+        try {
+            if(vol.isReservable() && ZonedDateTime.now().isBefore(vol.getDateDepart())){
+                this.client = client;
+                this.passager = passager;
+                this.vol = vol;
+                this.date = ZonedDateTime.now();
+                this.id = vol.getNumero() + client.getNom() + date.toEpochSecond(); // Construction de l'id de reservation
+
+                if(!vol.getReservations().contains(this)) //Eviter boucle infini
+                    vol.ajouterReservationWithBidirectional(this); // BIDIRECTIONAL
+            }
+             else{
+                 throw new Exception("Le vol n'est pas reservable");
+             }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
     }
 
     public String getId() {
-        return id;
+        return this.id;
     }
 
     public Client getClient() {
@@ -59,6 +66,7 @@ public class Reservation {
     }
 
     //Set Vol avec bidirectional avec la classe Vol
+    // Cette méthode n'est pas sensée être utilisée mais montre la double navigabilité
     public void setVolWithBidirectional(Vol vol){
         
         this.vol = vol;

@@ -47,8 +47,16 @@ public class Aeroport {
             return zoneId;
     }
 
-    // Ajoute une ville desservi par cet aéroport à la liste ds villes desservies
+    public List<Ville> getVilleDesservies() {
+        return villeDesservies;
+    }
+
     public void addVilleDesservie(Ville ville) {
+        this.villeDesservies.add(ville);
+    }
+
+    // Ajoute une ville desservi par cet aéroport à la liste ds villes desservies
+    public void getVilleDesservies(Ville ville) {
         this.villeDesservies.add(ville);
     } 
 

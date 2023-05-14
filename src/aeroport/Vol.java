@@ -22,7 +22,7 @@ public class Vol {
 
     private Compagnie compagnie;
 
-    private boolean IsReservable = true;
+    private boolean IsReservable = false;
 
     private List<Reservation> reservations = new ArrayList<>();
 
@@ -181,8 +181,8 @@ public class Vol {
         if(reservations.size() < 150){ // Limite de passagers
             this.reservations.add(reservation);
             
-            if(!reservation.getVol().equals(this))
-                reservation.setVolWithBidirectional(this);
+            if(!reservation.getVol().equals(this)) //IMPOSSIBLE DE CREER UNE RESERVATION SANS VOL DONC INUTILE OU DE CHANGER DE VOL SUR LA MEME RESERVATION
+                reservation.setVolWithBidirectional(this); 
         } 
         else {
             throw new IllegalArgumentException("Le vol est complet");
@@ -208,8 +208,37 @@ public class Vol {
         }
     }
 
+    public void ouvrir(Compagnie compagnie){
+
+        try {
+            if(this.compagnie.equals(compagnie)){
+                this.IsReservable = true;
+            }
+            else {
+                throw new IllegalArgumentException("La compagnie n'est pas autorisée à ouvrir ce vol");
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public boolean isReservable(){
         return this.IsReservable;
+    }
+
+    /** 
+     * Permet de décler le depart d'un vol qui ne possède pas d'escale
+     * @param delais : durée du décalage
+     * */ 
+    public void decaler(Duration delais){
+        if(this.trajet.getSaut().getEtapesEscales().isEmpty()){
+            this.trajet.getLastSaut().getEtapeArrivee().setDate(this.trajet.getLastSaut().getEtapeArrivee().getDate().plus(delais));
+            this.trajet.getSaut().getEtapeDepart().setDate(this.trajet.getSaut().getEtapeDepart().getDate().plus(delais));
+        }
+        else {
+            throw new IllegalArgumentException("Le vol possède des escales, il est donc impossible de le décaler");
+        }
     }
 
 
