@@ -118,26 +118,32 @@ public class Vol {
         return compagnie;
     }
 
-    public void setCompagnie(Compagnie compagnie) {
-        if(compagnie!=null) {
-            compagnie.addVolWithoutBidirectional(this);
-        }
-        if(this.compagnie!=null){
-            this.compagnie.removeVolWithoutBidirectional(this);
-        }
+    public void setCompagnieWithBidirectional(Compagnie compagnie) {
+
         this.compagnie = compagnie;
+
+        if(this.numero == null)
+            this.setNumero(); // set le numéro de vol lors de l'affectation à une compagnie
+
+        if(!compagnie.getVols().contains(this)) {
+            this.compagnie.addVolWithBidirectional(this);
+        }
     }
 
+    //pas utilisée
     protected void setCompagnieWithoutBidirectional(Compagnie compagnie) {
         this.compagnie = compagnie;
-        this.setNumero(); // set le numéro de vol lors de l'affectation à une compagnie
+        if(this.numero == null)
+            this.setNumero(); // set le numéro de vol lors de l'affectation à une compagnie
     }
 
     public String getNumero() {
         return numero;
     }
 
-    protected void setNumero() {
+
+    //Génère un numéro de vol lors de l'affectation à une compagnie
+    private void setNumero() {
         this.numero = this.compagnie.getGeneratorNumeroVol().next();
     }
 
@@ -189,8 +195,26 @@ public class Vol {
         }
     }
 
+    //Annulation d'une reservation à la liste des réservation avec Bidirectional
+    public void annulerReservationWithBidirectional(Reservation reservation) {
+        this.reservations.remove(reservation);
+
+        if(reservation.getVol().equals(this))
+            reservation.annulerWithBidirectional();
+    }
+
     public List<Reservation> getReservations() {
         return reservations;
+    }
+
+    //Supprime la compagnie avec bidirectional
+    public void removeCompagnieWithBidirectional() {
+
+        this.compagnie = null;
+
+        if(this.compagnie.getVols().contains(this))
+            this.compagnie.removeVolWithBidirectional(this);
+
     }
 
     public void fermer(Compagnie compagnie){

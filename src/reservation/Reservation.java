@@ -52,9 +52,12 @@ public class Reservation {
         return passager;
     }
 
-    public void annuler(){
-        vol.getReservations().remove(this);
+    public void annulerWithBidirectional(){
+
         vol = null;
+
+        if(vol.getReservations().contains(this))
+            vol.annulerReservationWithBidirectional(this);
     }
 
     public void confirmer(){
@@ -89,5 +92,15 @@ public class Reservation {
         }
 
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return "Reservation au nom de : "
+                + this.getClient().getNom()
+                + " pour le vol "
+                + this.getVol().getNumero()
+                + " pour le passager "
+                + this.getPassager().getNom();
     }
 }

@@ -82,9 +82,9 @@ public class Start {
         v1.ajouterEscale(a3, da2, dd2);
 
         Vol v2 = new Vol(a2, a4, dd1, da2);
-        compagnie3.addVol(v2);
+        compagnie3.addVolWithBidirectional(v2);
 
-        compagnie1.addVol(v1);
+        compagnie1.addVolWithBidirectional(v1);
         v1.ouvrir(compagnie1);
 
         v2.decaler(Duration.ofSeconds(60)); // Décaler Vol de 1 heures
@@ -96,9 +96,11 @@ public class Start {
         Reservation reservation1 = new Reservation(client3, passager5, v1);
         System.out.println("Ma reservation pour le vol :" + reservation1.getVol().getNumero());
 
+        Reservation reservation2 = new Reservation(client, passager2, v1);
+
         System.out.println("Les réservations du vol " + v1.getNumero() + " sont :");
         for (Reservation reservation : v1.getReservations()) {
-            System.out.println(reservation.getId());
+            System.out.println(reservation);
         }
 
         System.out.println("Les vols de la compagnie " + compagnie1.getName() + " sont :");

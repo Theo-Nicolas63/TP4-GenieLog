@@ -12,7 +12,7 @@ public class Aeroport {
 
     private List<Ville> villeDesservies = new ArrayList<Ville>(); // Liste des villes désservis par l'aéroport
 
-    private String code; // Code de l'aeroport
+    private String code; // Code de l'aeroport (pas utilisé)
 
     private ZoneId zoneId; // Fuseau horaire de l'aeroport
 
@@ -59,5 +59,10 @@ public class Aeroport {
     public void getVilleDesservies(Ville ville) {
         this.villeDesservies.add(ville);
     } 
+
+    @Override
+    public String toString() {
+        return "Aeroport " + nom;//" (" + code + ")";
+    }
 
 }

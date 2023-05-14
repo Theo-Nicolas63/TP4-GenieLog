@@ -22,6 +22,23 @@ public class Client {
         this.nom = nom;
     }
 
+    public String getNumeroCB(){
+        return this.numeroCB;
+    }
+
+    @Override
+    public boolean equals(Object o){ // devrait plutot utiliser la réfrence client mais pas implémenté
+        if(!(o instanceof Client))
+            return false;
+
+        Client c = (Client) o;    
+        return this.numeroCB.equals(c.getNumeroCB()); 
+    }
+
+    @Override
+    public String toString() {
+        return "Passager au nom de " + this.nom;
+    }
     
 
 }

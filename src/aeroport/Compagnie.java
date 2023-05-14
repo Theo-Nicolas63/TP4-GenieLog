@@ -35,39 +35,56 @@ public class Compagnie {
 
     public void setVols(Collection<Vol> vols) {
         for(Vol v : this.vols){
-            v.setCompagnieWithoutBidirectional(null);
+            v.removeCompagnieWithBidirectional();
         }
 
         this.vols = vols;
 
         if(this.vols != null) {
             for (Vol v : this.vols) {
-                v.setCompagnieWithoutBidirectional(this);
+                v.setCompagnieWithBidirectional(this);
             }
         }
     }
 
-    public void addVol(Vol vol){
-        vol.setCompagnieWithoutBidirectional(this);
-        this.vols.add(vol);
-    }
-
+    //pas utilisée
     public void removeVol(Vol vol){
         vol.setCompagnieWithoutBidirectional(null);
         this.vols.remove(vol);
     }
 
-
+    //Pas utilisée
     protected void setVolsWithoutBidirectional(Collection<Vol> vols) {
         this.vols = vols;
     }
 
+    //pas utilisée
     protected void addVolWithoutBidirectional(Vol vol){
         this.vols.add(vol);
     }
 
+    //pas utilisée
     protected void removeVolWithoutBidirectional(Vol vol){
         this.vols.remove(vol);
+    }
+
+    // bidirectional
+    public void removeVolWithBidirectional(Vol vol){
+        this.vols.remove(vol);
+
+        if(vol.getCompagnie() != null)
+            vol.removeCompagnieWithBidirectional();
+    }
+
+    //Bidirectional
+    public void addVolWithBidirectional(Vol vol){
+
+        this.vols.add(vol);
+
+        if(vol.getCompagnie() != this){
+            vol.setCompagnieWithBidirectional(this);
+        }
+
     }
 
     @Override
@@ -77,5 +94,10 @@ public class Compagnie {
             return this.name.equals(compagnie.name);
         }
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return "Compagnie " + this.name;
     }
 }

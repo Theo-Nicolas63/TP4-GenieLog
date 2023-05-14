@@ -25,5 +25,23 @@ public class Passager {
         return prenom;
     }
 
+    public String getNumeroPieceIdentite() {
+        return numeroPieceIdentite;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if(!(o instanceof Passager))
+            return false;
+
+        Passager p = (Passager) o;    
+        return this.numeroPieceIdentite.equals(p.getNumeroPieceIdentite());
+    }
+
+    @Override
+    public String toString() {
+        return "Passager au nom de " + this.nom + " " + this.prenom;
+    }
+
     
 }
